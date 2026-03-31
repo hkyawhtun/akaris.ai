@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#162032"/>
+  <circle cx="100" cy="82" r="38" fill="#d4af37" opacity="0.35"/>
+  <ellipse cx="100" cy="165" rx="60" ry="42" fill="#d4af37" opacity="0.25"/>
+  <text x="100" y="95" text-anchor="middle" font-family="system-ui, sans-serif" font-size="36" font-weight="700" fill="#d4af37">TZ</text>
+</svg>

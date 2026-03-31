@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /c/Repos/Akaris.ai/akaris.ai log --all --pretty=format:\"%H %s\" | head -20)",
+      "Bash(npm run:*)"
+    ]
+  }
+}
