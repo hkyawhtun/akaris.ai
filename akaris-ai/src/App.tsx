@@ -1,47 +1,57 @@
-import { useState } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Courses from './components/Courses';
-import WorkshopSection from './components/WorkshopSection';
-import WhyAkaris from './components/WhyAkaris';
-import Instructors from './components/Instructors';
-import CTA from './components/CTA';
-import Footer from './components/Footer';
-import EnrollModal from './components/EnrollModal';
-import PartnersPage from './pages/PartnersPage';
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Courses from "./components/Courses";
+import WorkshopSection from "./components/WorkshopSection";
+import WhyAkaris from "./components/WhyAkaris";
+import Instructors from "./components/Instructors";
+import CTA from "./components/CTA";
+import Footer from "./components/Footer";
+import EnrollModal from "./components/EnrollModal";
+import PartnersPage from "./pages/PartnersPage";
 
-type Page = 'home' | 'partners';
+type Page = "home" | "partners";
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState('');
-  const [page, setPage] = useState<Page>('home');
+  const [selectedCourse, setSelectedCourse] = useState("");
+  const [enquiryType, setEnquiryType] = useState("");
+  const [page, setPage] = useState<Page>("home");
 
-  const openEnroll = (course = '') => {
+  const openEnroll = (course: string = "", type: string = "") => {
+    console.log("Type : ", type, " : ", course);
     setSelectedCourse(course);
     setModalOpen(true);
+    setEnquiryType(type);
   };
 
   const navigate = (p: Page) => {
     setPage(p);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <>
-      <Navbar onEnroll={() => openEnroll()} onNavigate={navigate} activePage={page} />
+      <Navbar
+        onEnroll={() => openEnroll()}
+        onNavigate={navigate}
+        activePage={page}
+      />
 
-      {page === 'home' ? (
+      {page === "home" ? (
         <main>
           <Hero onEnroll={() => openEnroll()} />
           <Courses onEnroll={openEnroll} />
-          <WorkshopSection onEnroll={() => openEnroll()} />
+          <WorkshopSection onEnroll={openEnroll} />
           <WhyAkaris />
           <Instructors />
-          <CTA onEnroll={() => openEnroll()} />
+          <CTA onEnroll={openEnroll} />
         </main>
       ) : (
-        <PartnersPage onEnroll={() => openEnroll()} onNavigateHome={() => navigate('home')} />
+        <PartnersPage
+          onEnroll={() => openEnroll()}
+          onNavigateHome={() => navigate("home")}
+        />
       )}
 
       <Footer onNavigate={navigate} />
@@ -50,6 +60,7 @@ function App() {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         defaultCourse={selectedCourse}
+        enquiryType={enquiryType}
       />
     </>
   );
