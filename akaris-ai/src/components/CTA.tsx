@@ -1,4 +1,8 @@
-export default function CTA({ onEnroll }: { onEnroll: () => void }) {
+export default function CTA({
+  onEnroll,
+}: {
+  onEnroll: (course: string, type: string) => void;
+}) {
   return (
     <section id="enroll" className="bg-navy-950 py-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,18 +19,20 @@ export default function CTA({ onEnroll }: { onEnroll: () => void }) {
 
           <div className="relative">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-              Ready to Start Your{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">
+              Ready to Start Your{" "}
+              <span className="text-transparent bg-clip-text  from-gold-400 to-gold-600">
                 AI Journey?
               </span>
             </h2>
             <p className="text-slate-400 text-lg mb-10 max-w-lg mx-auto">
-              Join hundreds of learners already building their future with Akaris.ai. Start with
-              any course — no experience required.
+              Join hundreds of learners already building their future with
+              Akaris.ai. Start with any course — no experience required.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={onEnroll}
+                onClick={() =>
+                  onEnroll("Business AI Consultation", "consultation")
+                }
                 className="bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-base px-10 py-4 rounded-full transition-all hover:shadow-lg hover:shadow-gold-500/25"
               >
                 Get Started Today
