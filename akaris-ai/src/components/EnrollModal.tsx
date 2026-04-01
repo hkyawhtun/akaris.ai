@@ -82,25 +82,39 @@ export default function EnrollModal({
     formData.append("subject", `${flowType} — ${form.course || "General"}`);
     try {
       //const res = await fetch("https://api.web3forms.com/submit", {
-      await fetch(
-        "https://script.google.com/macros/s/AKfycbzHDGzE6xpBOu83KT6n4BI_ZVYRAAm1UL3Qtj1Yz4q0JnkyURGj1r76pYFWtqNqAn0K/exec",
+      const response = await fetch(
+        "https://script.google.com/macros/s/AKfycbx7DLTYmpJTuwbVRGFLvF64Hq91GDIPUdJr4OgMcCV6brVUQrn3aPMjCRzMRfocnRob/exec",
         {
           method: "POST",
-          mode: "no-cors", // This is the "Magic Key" for Apps Script
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body: formData.toString(),
         },
       );
-      // const data = await res.json();
-      // if (data.success) {
-      //   setStatus("success");
-      // } else {
-      //   setStatus("error");
-      // }
-      setStatus("success");
-    } catch {
+
+      // 2. Since we aren't using "no-cors", we can now read the body.
+      const resultText = await response.text();
+
+      let result;
+      try {
+        result = JSON.parse(resultText);
+      } catch (e) {
+        // If Google returns an HTML error page instead of JSON, we catch it here.
+        result = { status: "error" };
+      }
+
+      // 3. LOGIC CHECK:
+      // We only set success if the JSON actually says "success".
+      if (result.status === "success") {
+        setStatus("success");
+        setForm({ name: "", email: "", phone: "", course: "", type: "" });
+      } else {
+        // This will now catch your manual "throw new Error" from the script!
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error("Submission Error:", error);
       setStatus("error");
     }
   };
