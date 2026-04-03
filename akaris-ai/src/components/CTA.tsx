@@ -25,8 +25,8 @@ export default function CTA({
               </span>
             </h2>
             <p className="text-slate-400 text-lg mb-10 max-w-lg mx-auto">
-              Join hundreds of learners already building their future with
-              Akaris.ai. Start with any course — no experience required.
+              Join hundreds of Start-up Owners already building their Business
+              with Akaris.ai. Start with Business Consultation Session!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button

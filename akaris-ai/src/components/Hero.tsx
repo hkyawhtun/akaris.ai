@@ -30,7 +30,7 @@ export default function Hero({ onEnroll }: { onEnroll: () => void }) {
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
             Master AI Skills{" "}
-            <span className="text-transparent bg-clip-text from-gold-400 to-gold-600">
+            <span className="bg-clip-text from-gold-400 to-gold-600">
               That Matter
             </span>
           </h1>
