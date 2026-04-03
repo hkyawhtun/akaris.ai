@@ -83,7 +83,7 @@ export default function EnrollModal({
     try {
       //const res = await fetch("https://api.web3forms.com/submit", {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbzgFdwHjHx5V_rKebeAyOtpzDxmaCpqQvCckTiG6x6ixDVOpGDZ06lr2PSOi7Sc5efY/exec",
+        "https://script.google.com/macros/s/AKfycbyed4xBrctNd-L2S9-dubFo06NMUj6OK5NmRk1GeprrySxJKnHGXYYkMiRGnbkEmGCQ/exec",
         {
           method: "POST",
           headers: {
