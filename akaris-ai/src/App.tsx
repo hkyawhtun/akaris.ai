@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Courses from "./components/Courses";
@@ -9,7 +15,12 @@ import Instructors from "./components/Instructors";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
 import EnrollModal from "./components/EnrollModal";
+import LoginModal from "./components/LoginModal";
+import ProtectedRoute from "./components/ProtectedRoute";
 import PartnersPage from "./pages/PartnersPage";
+import ResourcesPage from "./pages/ResourcesPage";
+import ProfilePage from "./pages/ProfilePage";
+import Tools from "./components/Tools";
 
 type Page = "home" | "partners";
 
@@ -27,6 +38,7 @@ function HomeContent({
       <Hero onEnroll={() => onEnroll()} />
       <Courses onEnroll={onEnroll} />
       <WorkshopSection onEnroll={onEnroll} />
+      <Tools />
       <WhyAkaris />
       <Instructors />
       <CTA onEnroll={(course, type) => onEnroll(course, type)} />
@@ -38,6 +50,7 @@ function App() {
   const location = useLocation();
   const routerNavigate = useNavigate();
   const modalOpen = location.pathname === "/register";
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [enquiryType, setEnquiryType] = useState("");
   const page: Page = location.pathname === "/partners" ? "partners" : "home";
@@ -70,19 +83,20 @@ function App() {
     routerNavigate("/", { replace: true });
   };
 
+  const handleResourcesClick = () => {
+    setLoginModalOpen(true);
+  };
+
   return (
     <>
       <Navbar
-        onEnroll={() => openEnroll()}
         onNavigate={navigateTo}
         activePage={page}
+        onResourcesClick={handleResourcesClick}
       />
 
       <Routes>
-        <Route
-          path="/"
-          element={<HomeContent onEnroll={openEnroll} />}
-        />
+        <Route path="/" element={<HomeContent onEnroll={openEnroll} />} />
         <Route
           path="/partners"
           element={
@@ -96,6 +110,22 @@ function App() {
           path="/register"
           element={<HomeContent onEnroll={openEnroll} />}
         />
+        <Route
+          path="/resources"
+          element={
+            <ProtectedRoute>
+              <ResourcesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
@@ -106,6 +136,11 @@ function App() {
         onClose={closeEnroll}
         defaultCourse={selectedCourse}
         enquiryType={enquiryType}
+      />
+
+      <LoginModal
+        isOpen={loginModalOpen}
+        onClose={() => setLoginModalOpen(false)}
       />
     </>
   );
