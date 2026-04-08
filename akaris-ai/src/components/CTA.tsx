@@ -20,14 +20,23 @@ export default function CTA({
           <div className="relative">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
               Ready to Start Your{" "}
-              <span className="text-transparent bg-clip-text  from-gold-400 to-gold-600">
-                AI Journey?
+              <span className="bg-clip-text from-gold-400 to-gold-600">
+                Business Consultation?
               </span>
             </h2>
-            <p className="text-slate-400 text-lg mb-10 max-w-lg mx-auto">
-              Join hundreds of learners already building their future with
-              Akaris.ai. Start with any course — no experience required.
+            <p className="text-slate-400 text-lg mb-4 max-w-lg mx-auto">
+              Join hundreds of Start-up Owners already building their Business
+              with Akaris.ai. Start with a Business Consultation Session.
             </p>
+            <div className="inline-flex flex-col sm:flex-row items-center justify-center gap-3 mb-10 text-sm sm:text-base text-slate-300">
+              <span className="rounded-full border border-slate-700 bg-navy-900 px-4 py-2 text-slate-100 font-semibold">
+                1 hour consultation
+              </span>
+              <span className="rounded-full bg-gold-500/15 text-gold-300 px-4 py-2 font-semibold">
+                AUD 250
+              </span>
+              <span className="text-slate-500 line-through">AUD 300</span>
+            </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={() =>

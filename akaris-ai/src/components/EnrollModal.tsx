@@ -83,7 +83,7 @@ export default function EnrollModal({
     try {
       //const res = await fetch("https://api.web3forms.com/submit", {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbx7DLTYmpJTuwbVRGFLvF64Hq91GDIPUdJr4OgMcCV6brVUQrn3aPMjCRzMRfocnRob/exec",
+        "https://script.google.com/macros/s/AKfycbyed4xBrctNd-L2S9-dubFo06NMUj6OK5NmRk1GeprrySxJKnHGXYYkMiRGnbkEmGCQ/exec",
         {
           method: "POST",
           headers: {
@@ -123,7 +123,7 @@ export default function EnrollModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="enroll-title"
