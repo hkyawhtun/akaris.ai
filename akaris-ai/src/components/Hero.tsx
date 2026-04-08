@@ -9,7 +9,19 @@ export default function Hero({ onEnroll }: { onEnroll: () => void }) {
     <section
       id="home"
       className="relative min-h-screen bg-navy-950 flex items-center overflow-hidden"
+      style={{
+        backgroundImage: "url('/assets/banners/bg-hero.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center 30%",
+        backgroundAttachment: "fixed",
+      }}
     >
+      {/* Dark overlay for readability */}
+      <div
+        className="absolute inset-0 bg-black/40 pointer-events-none"
+        aria-hidden="true"
+      />
+
       {/* Ambient gradient blobs */}
       <div
         className="absolute inset-0 overflow-hidden pointer-events-none"
@@ -23,8 +35,8 @@ export default function Hero({ onEnroll }: { onEnroll: () => void }) {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
         <div className="max-w-3xl">
           {/* Eyebrow badge */}
-          <div className="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/30 text-gold-400 text-sm font-medium px-4 py-1.5 rounded-full mb-8">
-            <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-pulse" />
+          <div className="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/30 text-gold-400 text-lg font-medium px-4 py-1.5 rounded-xl mb-8">
+            {/* <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-pulse" /> */}
             AI Education for the Future
           </div>
 
