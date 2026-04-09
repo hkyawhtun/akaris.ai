@@ -30,7 +30,6 @@ export default function EnrollModal({
     course: defaultCourse,
     type: enquiryType,
   });
-  console.log("Enquiry Type : ", enquiryType, "Type : ", form.type);
   const [status, setStatus] = useState<Status>("idle");
   const firstInputRef = useRef<HTMLInputElement>(null);
 
@@ -63,7 +62,6 @@ export default function EnrollModal({
     e.preventDefault();
     setStatus("sending");
 
-    console.log("Form Type: ", form.type);
     const flowType =
       form.type == "Course Enrollment"
         ? "Course Enrollment"
@@ -71,7 +69,6 @@ export default function EnrollModal({
           ? "consultation"
           : "Webinar Registration";
 
-    // Use URLSearchParams to avoid the CORS "preflight" block
     const formData = new URLSearchParams();
     formData.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY);
     formData.append("name", form.name);
@@ -79,9 +76,9 @@ export default function EnrollModal({
     formData.append("phone", form.phone);
     formData.append("course", form.course || "Not specified");
     formData.append("type", flowType);
-    formData.append("subject", `${flowType} — ${form.course || "General"}`);
+    formData.append("subject", `${flowType} - ${form.course || "General"}`);
+
     try {
-      //const res = await fetch("https://api.web3forms.com/submit", {
       const response = await fetch(
         "https://script.google.com/macros/s/AKfycbyed4xBrctNd-L2S9-dubFo06NMUj6OK5NmRk1GeprrySxJKnHGXYYkMiRGnbkEmGCQ/exec",
         {
@@ -93,24 +90,19 @@ export default function EnrollModal({
         },
       );
 
-      // 2. Since we aren't using "no-cors", we can now read the body.
       const resultText = await response.text();
 
       let result;
       try {
         result = JSON.parse(resultText);
-      } catch (e) {
-        // If Google returns an HTML error page instead of JSON, we catch it here.
+      } catch {
         result = { status: "error" };
       }
 
-      // 3. LOGIC CHECK:
-      // We only set success if the JSON actually says "success".
       if (result.status === "success") {
         setStatus("success");
         setForm({ name: "", email: "", phone: "", course: "", type: "" });
       } else {
-        // This will now catch your manual "throw new Error" from the script!
         setStatus("error");
       }
     } catch (error) {
@@ -121,7 +113,6 @@ export default function EnrollModal({
 
   const isLoading = status === "sending";
 
-  // Dynamic title based on enquiry type
   const getModalTitle = () => {
     switch (form.type) {
       case "Course Enrollment":
@@ -142,16 +133,13 @@ export default function EnrollModal({
       aria-modal="true"
       aria-labelledby="enroll-title"
     >
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Panel */}
       <div className="relative bg-navy-900 border border-navy-800 rounded-2xl w-full max-w-md shadow-2xl">
-        {/* Header */}
         <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-navy-800">
           <div>
             <h2 id="enroll-title" className="text-white font-bold text-xl">
@@ -182,7 +170,6 @@ export default function EnrollModal({
           </button>
         </div>
 
-        {/* Body */}
         <div className="px-6 py-6">
           {status === "success" ? (
             <div className="text-center py-6">
@@ -222,7 +209,6 @@ export default function EnrollModal({
               noValidate
               className="flex flex-col gap-4"
             >
-              {/* Name */}
               <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="name"
@@ -243,7 +229,6 @@ export default function EnrollModal({
                 />
               </div>
 
-              {/* Email */}
               <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="email"
@@ -263,7 +248,6 @@ export default function EnrollModal({
                 />
               </div>
 
-              {/* Phone */}
               <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="phone"
@@ -283,7 +267,6 @@ export default function EnrollModal({
                 />
               </div>
 
-              {/* Course */}
               <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="course"
@@ -323,7 +306,7 @@ export default function EnrollModal({
                 disabled={isLoading}
                 className="mt-2 bg-gold-500 hover:bg-gold-400 disabled:opacity-60 disabled:cursor-not-allowed text-navy-950 font-bold text-sm px-8 py-3 rounded-full transition-all hover:shadow-lg hover:shadow-gold-500/25"
               >
-                {isLoading ? "Sending…" : "Submit Enquiry"}
+                {isLoading ? "Sending..." : "Submit Enquiry"}
               </button>
             </form>
           )}

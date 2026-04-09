@@ -1,50 +1,69 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-type Status = 'idle' | 'sending' | 'success' | 'error';
+type Status = "idle" | "sending" | "success" | "error";
 
 export default function FooterNewsletter() {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<Status>('idle');
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<Status>("idle");
+  const web3FormsKey = import.meta.env.VITE_WEB3FORMS_KEY;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-    setStatus('sending');
+    if (!email || !web3FormsKey) return;
+
+    setStatus("sending");
+
+    const formData = new URLSearchParams();
+    formData.append("access_key", web3FormsKey);
+    formData.append("email", email);
+    formData.append("subject", "New Newsletter Subscription - Akaris.ai");
+    formData.append("from_name", "Akaris.ai Newsletter");
+    formData.append("_template", "table");
+
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
-          subject: 'New Newsletter Subscription — Akaris.ai',
-          email,
-          _template: 'table',
-          from_name: 'Akaris.ai Newsletter',
-        }),
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData.toString(),
       });
-      const data = await res.json();
-      if (data.success) {
-        setStatus('success');
-        setEmail('');
+
+      const result = await response.json();
+      if (result.success) {
+        setStatus("success");
+        setEmail("");
       } else {
-        setStatus('error');
+        setStatus("error");
       }
     } catch {
-      setStatus('error');
+      setStatus("error");
     }
   };
 
   return (
     <div>
-      <h4 className="text-white font-semibold text-sm mb-1 tracking-wide">Stay in the Loop</h4>
+      <h4 className="text-white font-semibold text-sm mb-1 tracking-wide">
+        Stay in the Loop
+      </h4>
       <p className="text-slate-500 text-xs mb-4 leading-relaxed">
         Get AI insights, course updates, and exclusive offers.
       </p>
 
-      {status === 'success' ? (
+      {status === "success" ? (
         <div className="flex items-center gap-2 text-emerald-400 text-sm bg-emerald-400/10 border border-emerald-400/20 rounded-xl px-4 py-3">
-          <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          <svg
+            className="w-4 h-4 shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
           </svg>
           You're subscribed!
         </div>
@@ -62,14 +81,23 @@ export default function FooterNewsletter() {
             />
             <button
               type="submit"
-              disabled={status === 'sending'}
-              className="bg-gold-500 hover:bg-gold-400 disabled:opacity-60 text-navy-950 font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors shrink-0"
+              disabled={status === "sending" || !web3FormsKey}
+              className="bg-gold-500 hover:bg-gold-400 disabled:opacity-60 disabled:cursor-not-allowed text-navy-950 font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors shrink-0"
             >
-              {status === 'sending' ? '…' : 'Subscribe'}
+              {status === "sending" ? "..." : "Subscribe"}
             </button>
           </div>
-          {status === 'error' && (
-            <p className="text-red-400 text-xs">Something went wrong. Please try again.</p>
+
+          {!web3FormsKey && (
+            <p className="text-amber-400 text-xs">
+              Newsletter is not configured yet. Set `VITE_WEB3FORMS_KEY`.
+            </p>
+          )}
+
+          {status === "error" && (
+            <p className="text-red-400 text-xs">
+              Something went wrong. Please try again.
+            </p>
           )}
         </form>
       )}

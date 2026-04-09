@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { courses } from "../data/courses";
 import type { Course } from "../data/courses";
 
@@ -10,14 +11,12 @@ const LEVEL_STYLES: Record<Course["level"], string> = {
 
 function CourseCard({
   course,
-  onEnroll,
 }: {
   course: Course;
   onEnroll: (course: string, type: string) => void;
 }) {
   return (
     <div className="bg-navy-950 border border-navy-800 rounded-2xl overflow-hidden flex flex-col hover:border-gold-500/40 transition-all group min-h-[500px]">
-      {/* Cover Image */}
       <div className="relative w-full bg-navy-900 overflow-hidden aspect-video">
         <img
           src={course.image}
@@ -26,7 +25,6 @@ function CourseCard({
         />
       </div>
 
-      {/* Content */}
       <div className="p-6 flex flex-col flex-1 justify-between">
         <div className="flex flex-col gap-4">
           <div className="flex items-start justify-between gap-4">
@@ -41,11 +39,11 @@ function CourseCard({
               {course.level}
             </span>
           </div>
+
           <p className="text-slate-400 text-sm leading-relaxed mb-4">
             {course.description}
           </p>
 
-          {/* Course Details */}
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <span className="text-slate-400 text-sm">Duration:</span>
@@ -54,89 +52,42 @@ function CourseCard({
               </span>
             </div>
             <div className="text-right">
-              <p className="text-lg font-semibold text-white">
-                AUD {course.price}
-              </p>
+              <p className="text-lg font-semibold text-white">AUD {course.price}</p>
               {course.originalPrice ? (
-                <p className="text-slate-500 text-xs line-through">
-                  AUD {course.originalPrice}
-                </p>
+                <p className="text-slate-500 text-xs line-through">AUD {course.originalPrice}</p>
               ) : null}
             </div>
           </div>
 
           <ul className="flex flex-col gap-1.5">
-            {course.highlights.map((h) => (
+            {course.highlights.map((highlight) => (
               <li
-                key={h}
+                key={highlight}
                 className="flex items-center gap-2 text-slate-400 text-sm"
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full bg-gold-500 shrink-0"
                   aria-hidden="true"
                 />
-                {h}
+                {highlight}
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Action Button - Always at bottom */}
         <div className="mt-6 pt-4 border-t border-navy-800">
-          {course.title === "AI Starter for Everyone" && (
-            <a
-              href="/course/ai-starter-logistics"
-              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
+          <Link
+            to={course.logisticsPath}
+            className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
+          >
+            <span>View Details</span>
+            <span
+              className="group-hover:translate-x-1 transition-transform duration-200"
+              aria-hidden="true"
             >
-              <span>View Details</span>
-              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
-            </a>
-          )}
-          {course.title === "AI Business Growth Accelerator" && (
-            <a
-              href="/course/ai-business-growth-logistics"
-              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
-            >
-              <span>View Details</span>
-              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
-            </a>
-          )}
-          {course.title === "AI Automation Mastery" && (
-            <a
-              href="/course/ai-automation-mastery-logistics"
-              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
-            >
-              <span>View Details</span>
-              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
-            </a>
-          )}
-          {course.title === "Vibe Coding for Modern Software Developers" && (
-            <a
-              href="/course/vibe-coding-logistics"
-              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
-            >
-              <span>View Details</span>
-              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
-            </a>
-          )}
-          {course.title === "Become an AI Engineer" && (
-            <a
-              href="/course/ai-engineer-logistics"
-              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
-            >
-              <span>View Details</span>
-              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
-            </a>
-          )}
-          {course.title === "Open Claw : The Complete Mastery" && (
-            <a
-              href="/course/open-claw-logistics"
-              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
-            >
-              <span>View Details</span>
-              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
-            </a>
-          )}
+              -&gt;
+            </span>
+          </Link>
         </div>
       </div>
     </div>

@@ -59,12 +59,13 @@ export default function Navbar({
 
   const handleAnchorClick = (anchorId: string) => {
     if (location.pathname === "/") {
-      // Already on home page, just scroll to section
       const element = document.getElementById(anchorId);
       element?.scrollIntoView({ behavior: "smooth" });
     } else {
-      // Not on home page, navigate to home with anchor
-      navigate("/#" + anchorId);
+      navigate({
+        pathname: "/",
+        hash: `#${anchorId}`,
+      });
     }
   };
 

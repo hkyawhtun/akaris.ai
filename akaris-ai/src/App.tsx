@@ -63,16 +63,43 @@ function App() {
   const page: Page = location.pathname === "/partners" ? "partners" : "home";
 
   useEffect(() => {
+    if (location.hash) {
+      const anchorId = location.hash.replace("#", "");
+      window.setTimeout(() => {
+        const target = document.getElementById(anchorId);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 60);
+      return;
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (location.pathname !== "/register") return;
+    const params = new URLSearchParams(location.search);
+    const course = params.get("course") ?? "";
+    const type = params.get("type") ?? "";
+    if (course) setSelectedCourse(course);
+    if (type) setEnquiryType(type);
+  }, [location.pathname, location.search]);
 
   const openEnroll = (course: string = "", type: string = "") => {
-    console.log("Type : ", type, " : ", course);
     setSelectedCourse(course);
     setEnquiryType(type);
-    if (location.pathname !== "/register") {
-      routerNavigate("/register", { state: { from: location.pathname } });
-    }
+    const params = new URLSearchParams();
+    if (course) params.set("course", course);
+    if (type) params.set("type", type);
+    const search = params.toString();
+    const fromPath = `${location.pathname}${location.hash}`;
+    routerNavigate(
+      {
+        pathname: "/register",
+        search: search ? `?${search}` : "",
+      },
+      { state: { from: fromPath } },
+    );
   };
 
   const navigateTo = (p: Page) => {

@@ -7,7 +7,6 @@ export default function CTA({
     <section id="enroll" className="bg-navy-950 py-24">
       <div className="max-w-5xl mx-auto px-4">
         <div className="relative bg-navy-900 border border-gold-500/20 rounded-3xl p-10 sm:p-16 overflow-hidden text-center">
-          {/* Background blobs */}
           <div
             className="absolute -top-20 -right-20 w-64 h-64 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"
             aria-hidden="true"
@@ -38,8 +37,7 @@ export default function CTA({
                       Strategy Session
                     </span>
                     <span className="text-slate-400 text-sm">
-                      Get actionable recommendations and business automation
-                      focus.
+                      Get actionable recommendations and business automation focus.
                     </span>
                   </div>
 
@@ -48,26 +46,20 @@ export default function CTA({
                       <p className="text-slate-400 text-[11px] uppercase tracking-[0.24em] font-semibold">
                         Duration
                       </p>
-                      <p className="mt-3 text-white text-2xl font-semibold">
-                        1 hour
-                      </p>
+                      <p className="mt-3 text-white text-2xl font-semibold">1 hour</p>
                     </div>
                     <div className="rounded-3xl border border-slate-800 bg-navy-950/80 p-5">
                       <p className="text-slate-400 text-[11px] uppercase tracking-[0.24em] font-semibold">
                         Price
                       </p>
-                      <p className="mt-3 text-white text-2xl font-semibold">
-                        AUD 250
-                      </p>
-                      <p className="mt-2 text-slate-500 text-xs line-through">
-                        AUD 300
-                      </p>
+                      <p className="mt-3 text-white text-2xl font-semibold">AUD 250</p>
+                      <p className="mt-2 text-slate-500 text-xs line-through">AUD 300</p>
                     </div>
                   </div>
 
                   <div className="rounded-3xl border border-slate-800 bg-navy-950/80 p-5 text-slate-300">
                     <p className="text-sm leading-6">
-                      You’ll leave with a practical action plan, AI use cases,
+                      You'll leave with a practical action plan, AI use cases,
                       and a revenue-focused growth path for your next steps.
                     </p>
                   </div>
@@ -84,9 +76,7 @@ export default function CTA({
                   </p>
                 </div>
                 <button
-                  onClick={() =>
-                    onEnroll("Business AI Consultation", "consultation")
-                  }
+                  onClick={() => onEnroll("Business AI Consultation", "consultation")}
                   className="mb-4 rounded-full bg-gold-500 px-10 py-4 text-base font-bold text-navy-950 transition-all hover:bg-gold-400 hover:shadow-lg hover:shadow-gold-500/30"
                 >
                   Book Consultation
