@@ -28,26 +28,11 @@ function CourseCard({
 
       {/* Content */}
       <div className="p-6 flex flex-col gap-4">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex flex-col flex-1">
-            <h3 className="text-white font-semibold text-lg mb-2 group-hover:text-gold-400 transition-colors leading-snug">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col flex-1 min-w-0">
+            <h3 className="text-white font-semibold text-lg mb-3 group-hover:text-gold-400 transition-colors leading-snug">
               {course.title}
             </h3>
-            <div className="flex flex-wrap items-center gap-3 text-sm text-slate-300">
-              <span className="inline-flex items-center rounded-full border border-slate-700 bg-slate-950/80 px-3 py-1">
-                {course.duration}
-              </span>
-              <div className="text-right">
-                <p className="text-lg font-semibold text-white">
-                  AUD {course.price}
-                </p>
-                {course.originalPrice ? (
-                  <p className="text-slate-500 text-xs line-through">
-                    AUD {course.originalPrice}
-                  </p>
-                ) : null}
-              </div>
-            </div>
           </div>
           <span
             className={`text-xs font-semibold px-3 py-2 rounded-lg border shrink-0 ${LEVEL_STYLES[course.level]}`}
@@ -55,14 +40,31 @@ function CourseCard({
             {course.level}
           </span>
         </div>
+        <p className="text-slate-400 text-sm leading-relaxed mb-4">
+          {course.description}
+        </p>
 
-        <div>
-          <p className="text-slate-400 text-sm leading-relaxed">
-            {course.description}
-          </p>
+        {/* Course Details */}
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-slate-400 text-sm">Duration:</span>
+            <span className="inline-flex items-center rounded-full border border-slate-700 bg-slate-950/80 px-3 py-1 text-sm text-slate-300">
+              {course.duration}
+            </span>
+          </div>
+          <div className="text-right">
+            <p className="text-lg font-semibold text-white">
+              AUD {course.price}
+            </p>
+            {course.originalPrice ? (
+              <p className="text-slate-500 text-xs line-through">
+                AUD {course.originalPrice}
+              </p>
+            ) : null}
+          </div>
         </div>
 
-        <ul className="mt-auto flex flex-col gap-1.5">
+        <ul className="flex flex-col gap-1.5">
           {course.highlights.map((h) => (
             <li
               key={h}

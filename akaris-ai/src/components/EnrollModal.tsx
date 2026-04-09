@@ -121,6 +121,20 @@ export default function EnrollModal({
 
   const isLoading = status === "sending";
 
+  // Dynamic title based on enquiry type
+  const getModalTitle = () => {
+    switch (form.type) {
+      case "Course Enrollment":
+        return "Enroll Now";
+      case "consultation":
+        return "Book for Consultation";
+      case "webinar":
+        return "Register Now for Webinar";
+      default:
+        return "Enroll Now";
+    }
+  };
+
   return (
     <div
       className="fixed inset-0 flex items-center justify-center p-4"
@@ -141,7 +155,7 @@ export default function EnrollModal({
         <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-navy-800">
           <div>
             <h2 id="enroll-title" className="text-white font-bold text-xl">
-              Enroll Now
+              {getModalTitle()}
             </h2>
             <p className="text-slate-400 text-sm mt-0.5">
               We'll be in touch with next steps.

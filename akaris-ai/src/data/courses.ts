@@ -99,9 +99,9 @@ export const courses: Course[] = [
   },
   {
     id: 6,
-    title: "Open Claude Mastery",
+    title: "Open Claw : The Complete Mastery",
     description:
-      "Master Open Claude through a non-technical lens. This course translates complex concepts into practical, everyday tools, empowering you to automate workflows and lead tech-driven projects with confidence and ease.",
+      "Master Open Claw through a non-technical lens. This course translates complex concepts into practical, everyday tools, empowering you to automate workflows and lead tech-driven projects with confidence and ease.",
     level: "Intermediate",
     icon: "🛠️",
     highlights: [
@@ -111,7 +111,7 @@ export const courses: Course[] = [
     ],
     image: "/assets/courses/OpenClawMaster.png",
     duration: "6 weeks",
-    price: 1900,
-    originalPrice: 2000,
+    price: 350,
+    originalPrice: 400,
   },
 ];

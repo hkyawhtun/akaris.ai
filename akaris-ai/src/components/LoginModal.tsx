@@ -4,12 +4,13 @@ import { useAuth } from "../hooks/useAuth";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  fromResources?: boolean;
 }
 
 type Mode = "login" | "signup";
 type Status = "idle" | "loading" | "success" | "error";
 
-export default function LoginModal({ isOpen, onClose }: Props) {
+export default function LoginModal({ isOpen, onClose, fromResources = false }: Props) {
   const { login, signup, loginWithGoogle, error: authError } = useAuth();
   const [mode, setMode] = useState<Mode>("login");
   const [status, setStatus] = useState<Status>("idle");
@@ -100,12 +101,18 @@ export default function LoginModal({ isOpen, onClose }: Props) {
         <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-navy-800">
           <div>
             <h2 id="auth-title" className="text-white font-bold text-xl">
-              {mode === "login" ? "Welcome Back" : "Create Account"}
+              {fromResources
+                ? "Sign in to access resources"
+                : mode === "login"
+                ? "Welcome Back"
+                : "Sign Up"}
             </h2>
             <p className="text-slate-400 text-sm mt-0.5">
-              {mode === "login"
-                ? "Sign in to access resources"
-                : "Join us to access exclusive resources"}
+              {fromResources
+                ? "Access exclusive resources and tools"
+                : mode === "login"
+                ? "Sign in to your account"
+                : "Create your account to get started"}
             </p>
           </div>
           <button
