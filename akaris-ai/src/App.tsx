@@ -51,6 +51,7 @@ function App() {
   const routerNavigate = useNavigate();
   const modalOpen = location.pathname === "/register";
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [loginFromResources, setLoginFromResources] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [enquiryType, setEnquiryType] = useState("");
   const page: Page = location.pathname === "/partners" ? "partners" : "home";
@@ -84,6 +85,7 @@ function App() {
   };
 
   const handleResourcesClick = () => {
+    setLoginFromResources(true);
     setLoginModalOpen(true);
   };
 
@@ -140,7 +142,11 @@ function App() {
 
       <LoginModal
         isOpen={loginModalOpen}
-        onClose={() => setLoginModalOpen(false)}
+        onClose={() => {
+          setLoginModalOpen(false);
+          setLoginFromResources(false);
+        }}
+        fromResources={loginFromResources}
       />
     </>
   );
