@@ -16,7 +16,7 @@ function CourseCard({
   onEnroll: (course: string, type: string) => void;
 }) {
   return (
-    <div className="bg-navy-950 border border-navy-800 rounded-2xl overflow-hidden flex flex-col gap-0 hover:border-gold-500/40 transition-all group">
+    <div className="bg-navy-950 border border-navy-800 rounded-2xl overflow-hidden flex flex-col hover:border-gold-500/40 transition-all group min-h-[500px]">
       {/* Cover Image */}
       <div className="relative w-full bg-navy-900 overflow-hidden aspect-video">
         <img
@@ -27,64 +27,117 @@ function CourseCard({
       </div>
 
       {/* Content */}
-      <div className="p-6 flex flex-col gap-4">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex flex-col flex-1 min-w-0">
-            <h3 className="text-white font-semibold text-lg mb-3 group-hover:text-gold-400 transition-colors leading-snug">
-              {course.title}
-            </h3>
-          </div>
-          <span
-            className={`text-xs font-semibold px-3 py-2 rounded-lg border shrink-0 ${LEVEL_STYLES[course.level]}`}
-          >
-            {course.level}
-          </span>
-        </div>
-        <p className="text-slate-400 text-sm leading-relaxed mb-4">
-          {course.description}
-        </p>
-
-        {/* Course Details */}
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-slate-400 text-sm">Duration:</span>
-            <span className="inline-flex items-center rounded-full border border-slate-700 bg-slate-950/80 px-3 py-1 text-sm text-slate-300">
-              {course.duration}
+      <div className="p-6 flex flex-col flex-1 justify-between">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex flex-col flex-1 min-w-0">
+              <h3 className="text-white font-semibold text-lg mb-3 group-hover:text-gold-400 transition-colors leading-snug">
+                {course.title}
+              </h3>
+            </div>
+            <span
+              className={`text-xs font-semibold px-3 py-2 rounded-lg border shrink-0 ${LEVEL_STYLES[course.level]}`}
+            >
+              {course.level}
             </span>
           </div>
-          <div className="text-right">
-            <p className="text-lg font-semibold text-white">
-              AUD {course.price}
-            </p>
-            {course.originalPrice ? (
-              <p className="text-slate-500 text-xs line-through">
-                AUD {course.originalPrice}
+          <p className="text-slate-400 text-sm leading-relaxed mb-4">
+            {course.description}
+          </p>
+
+          {/* Course Details */}
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-400 text-sm">Duration:</span>
+              <span className="inline-flex items-center rounded-full border border-slate-700 bg-slate-950/80 px-3 py-1 text-sm text-slate-300">
+                {course.duration}
+              </span>
+            </div>
+            <div className="text-right">
+              <p className="text-lg font-semibold text-white">
+                AUD {course.price}
               </p>
-            ) : null}
+              {course.originalPrice ? (
+                <p className="text-slate-500 text-xs line-through">
+                  AUD {course.originalPrice}
+                </p>
+              ) : null}
+            </div>
           </div>
+
+          <ul className="flex flex-col gap-1.5">
+            {course.highlights.map((h) => (
+              <li
+                key={h}
+                className="flex items-center gap-2 text-slate-400 text-sm"
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full bg-gold-500 shrink-0"
+                  aria-hidden="true"
+                />
+                {h}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <ul className="flex flex-col gap-1.5">
-          {course.highlights.map((h) => (
-            <li
-              key={h}
-              className="flex items-center gap-2 text-slate-400 text-sm"
+        {/* Action Button - Always at bottom */}
+        <div className="mt-6 pt-4 border-t border-navy-800">
+          {course.title === "AI Starter for Everyone" && (
+            <a
+              href="/course/ai-starter-logistics"
+              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
             >
-              <span
-                className="w-1.5 h-1.5 rounded-full bg-gold-500 shrink-0"
-                aria-hidden="true"
-              />
-              {h}
-            </li>
-          ))}
-        </ul>
-
-        <button
-          onClick={() => onEnroll(course.title, "Course Enrollment")}
-          className="mt-2 text-gold-400 hover:text-gold-300 text-sm font-semibold flex items-center gap-1 transition-colors w-fit"
-        >
-          Enroll Now <span aria-hidden="true">→</span>
-        </button>
+              <span>View Details</span>
+              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
+            </a>
+          )}
+          {course.title === "AI Business Growth Accelerator" && (
+            <a
+              href="/course/ai-business-growth-logistics"
+              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
+            >
+              <span>View Details</span>
+              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
+            </a>
+          )}
+          {course.title === "AI Automation Mastery" && (
+            <a
+              href="/course/ai-automation-mastery-logistics"
+              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
+            >
+              <span>View Details</span>
+              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
+            </a>
+          )}
+          {course.title === "Vibe Coding for Modern Software Developers" && (
+            <a
+              href="/course/vibe-coding-logistics"
+              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
+            >
+              <span>View Details</span>
+              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
+            </a>
+          )}
+          {course.title === "Become an AI Engineer" && (
+            <a
+              href="/course/ai-engineer-logistics"
+              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
+            >
+              <span>View Details</span>
+              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
+            </a>
+          )}
+          {course.title === "Open Claw : The Complete Mastery" && (
+            <a
+              href="/course/open-claw-logistics"
+              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-gold-500/25 flex items-center justify-center gap-2 group"
+            >
+              <span>View Details</span>
+              <span className="group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">→</span>
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );

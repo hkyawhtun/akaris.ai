@@ -20,6 +20,12 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PartnersPage from "./pages/PartnersPage";
 import ResourcesPage from "./pages/ResourcesPage";
 import ProfilePage from "./pages/ProfilePage";
+import CourseLogisticsPage from "./pages/CourseLogisticsPage";
+import AIBusinessGrowthLogisticsPage from "./pages/AIBusinessGrowthLogisticsPage";
+import AIAutomationMasteryLogisticsPage from "./pages/AIAutomationMasteryLogisticsPage";
+import VibeCodingLogisticsPage from "./pages/VibeCodingLogisticsPage";
+import AIEngineerLogisticsPage from "./pages/AIEngineerLogisticsPage";
+import OpenClawLogisticsPage from "./pages/OpenClawLogisticsPage";
 import Tools from "./components/Tools";
 
 type Page = "home" | "partners";
@@ -127,6 +133,30 @@ function App() {
               <ProfilePage />
             </ProtectedRoute>
           }
+        />
+        <Route
+          path="/course/ai-starter-logistics"
+          element={<CourseLogisticsPage />}
+        />
+        <Route
+          path="/course/ai-business-growth-logistics"
+          element={<AIBusinessGrowthLogisticsPage />}
+        />
+        <Route
+          path="/course/ai-automation-mastery-logistics"
+          element={<AIAutomationMasteryLogisticsPage />}
+        />
+        <Route
+          path="/course/vibe-coding-logistics"
+          element={<VibeCodingLogisticsPage />}
+        />
+        <Route
+          path="/course/ai-engineer-logistics"
+          element={<AIEngineerLogisticsPage />}
+        />
+        <Route
+          path="/course/open-claw-logistics"
+          element={<OpenClawLogisticsPage />}
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
