@@ -5,6 +5,7 @@ const STATUS_STYLES: Record<Workshop["status"], string> = {
   Open: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30",
   "Coming Soon": "text-blue-400 bg-blue-400/10 border-blue-400/30",
   Planning: "text-amber-400 bg-amber-400/10 border-amber-400/30",
+  Closed: "text-slate-400 bg-slate-400/10 border-slate-400/30",
 };
 
 function WorkshopCard({

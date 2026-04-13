@@ -1,5 +1,5 @@
 export type WorkshopMode = "Online" | "In-Person";
-export type WorkshopStatus = "Open" | "Coming Soon" | "Planning";
+export type WorkshopStatus = "Open" | "Coming Soon" | "Planning" | "Closed";
 
 export interface Workshop {
   id: number;
@@ -23,7 +23,7 @@ export const workshops: Workshop[] = [
       "An interactive live session covering AI fundamentals and hands-on exercises — perfect for absolute beginners.",
     mode: "Online",
     location: "Zoom / Live Stream",
-    status: "Open",
+    status: "Closed",
     date: "April 2026",
     icon: "🌐",
     image: "/assets/webinars/Webinar-Starter.png",
