@@ -27,6 +27,9 @@ import VibeCodingLogisticsPage from "./pages/VibeCodingLogisticsPage";
 import AIEngineerLogisticsPage from "./pages/AIEngineerLogisticsPage";
 import OpenClawLogisticsPage from "./pages/OpenClawLogisticsPage";
 import Tools from "./components/Tools";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
+import PaymentForm from "./components/PaymentForm";
 
 type Page = "home" | "partners";
 
@@ -185,6 +188,9 @@ function App() {
           path="/course/open-claw-logistics"
           element={<OpenClawLogisticsPage />}
         />
+        <Route path="/success" element={<PaymentSuccess />} />
+        <Route path="/cancel" element={<PaymentCancel />} />
+        <Route path="/payment" element={<PaymentForm />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 

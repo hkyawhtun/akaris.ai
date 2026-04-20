@@ -42,6 +42,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Inside AuthProvider
+  const syncWithBackend = async (firebaseUser: FirebaseUser) => {
+    try {
+      const idToken = await firebaseUser.getIdToken();
+
+      // Replace with your actual backend URL
+      const response = await fetch(
+        import.meta.env.VITE_BACKEND_URL + "api/users/sync",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${idToken}`,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Backend sync failed");
+      }
+
+      const dbUser = await response.json();
+      console.log("Synced with MySQL:", dbUser);
+      return dbUser;
+    } catch (err) {
+      console.error("Error syncing with backend:", err);
+    }
+  };
+
   // Fetch user profile from Firestore
   const fetchUserProfile = async (firebaseUser: FirebaseUser) => {
     try {
@@ -60,6 +89,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await updateDoc(doc(db, "users", firebaseUser.uid), {
           lastLogin: Timestamp.now(),
         });
+
+        await syncWithBackend(firebaseUser);
       }
     } catch (err) {
       console.error("Error fetching user profile:", err);

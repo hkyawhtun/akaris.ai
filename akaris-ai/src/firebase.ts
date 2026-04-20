@@ -26,3 +26,6 @@ setPersistence(auth, browserLocalPersistence);
 export const db = getFirestore(app);
 
 export default app;
+
+// Add this temporarily for debugging/testing
+(window as any).auth = auth;

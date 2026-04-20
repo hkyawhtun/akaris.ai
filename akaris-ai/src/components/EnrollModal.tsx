@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 
 const COURSES = [
   "AI Starter for Everyone",
@@ -23,6 +25,10 @@ export default function EnrollModal({
   defaultCourse = "",
   enquiryType = "",
 }: Props) {
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+  if (!authContext) return null;
+  const { user } = authContext;
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -60,6 +66,10 @@ export default function EnrollModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      setStatus("error");
+      return;
+    }
     setStatus("sending");
 
     const flowType =
@@ -69,42 +79,34 @@ export default function EnrollModal({
           ? "consultation"
           : "Webinar Registration";
 
-    const formData = new URLSearchParams();
-    formData.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY);
-    formData.append("name", form.name);
-    formData.append("email", form.email);
-    formData.append("phone", form.phone);
-    formData.append("course", form.course || "Not specified");
-    formData.append("type", flowType);
-    formData.append("subject", `${flowType} - ${form.course || "General"}`);
-
     try {
-      const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbyed4xBrctNd-L2S9-dubFo06NMUj6OK5NmRk1GeprrySxJKnHGXYYkMiRGnbkEmGCQ/exec",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: formData.toString(),
+      const idToken = await user.getIdToken();
+      const response = await fetch("http://localhost:5000/api/enquiries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
         },
+        body: JSON.stringify({
+          course: form.course || "Not specified",
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          type: flowType,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Failed to submit enquiry");
+
+      const enquiry = await response.json();
+
+      setStatus("success");
+      setForm({ name: "", email: "", phone: "", course: "", type: "" });
+
+      // Navigate to payment
+      navigate(
+        `/payment?serviceId=${enquiry.service.id}&serviceName=${encodeURIComponent(enquiry.service.name)}&price=${enquiry.service.price}`,
       );
-
-      const resultText = await response.text();
-
-      let result;
-      try {
-        result = JSON.parse(resultText);
-      } catch {
-        result = { status: "error" };
-      }
-
-      if (result.status === "success") {
-        setStatus("success");
-        setForm({ name: "", email: "", phone: "", course: "", type: "" });
-      } else {
-        setStatus("error");
-      }
     } catch (error) {
       console.error("Submission Error:", error);
       setStatus("error");
